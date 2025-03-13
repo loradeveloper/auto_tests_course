@@ -26,6 +26,9 @@ class TestMainPage1():
 
     # Для запуска тестов с нужной маркировкой:
     # pytest -s -v -m smoke filename.py
+    # Для запуска всех тестов, КРОМЕ smoke:
+    # pytest -s -v -m "not smoke" filename.py
+    # Можно применять логические операторы
     @pytest.mark.smoke
     # вызываем фикстуру в тесте, передав ее как параметр
     def test_guest_should_see_login_link(self, browser):
@@ -34,9 +37,19 @@ class TestMainPage1():
         browser.find_element(By.CSS_SELECTOR, "#login_link")
         print("finish test1")
 
+    # Только regression для windows 10:
+    # pytest -s -v -m "regression and win10" filename.py
     @pytest.mark.regression
+    @pytest.mark.win10
     def test_guest_should_see_basket_link_on_the_main_page(self, browser):
         print("start test2")
         browser.get(link)
         browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
         print("finish test2")
+
+    # Такой меткой помечаются тесты, которые ожидаемо упадут при наличии багов
+    # Чтобы не влиял на конечный результат, будет skipped
+    # skip должен быть последним маркером
+    @pytest.mark.skip
+    def test_skip(self):
+        print("will be skipped anyway")
