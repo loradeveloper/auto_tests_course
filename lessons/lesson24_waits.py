@@ -10,6 +10,9 @@ browser = webdriver.Chrome()
 
 browser.get("http://suninjuly.github.io/explicit_wait2.html")
 
+# Неявное ожидание для всех элементов, не всегда стоит использовать
+# browser.implicitly_wait(10)
+
 # говорим Selenium проверять в течение 5 секунд, пока кнопка не станет кликабельной
 price = WebDriverWait(browser, 20).until(
     EC.text_to_be_present_in_element((By.CSS_SELECTOR, "#price"), "$100")
